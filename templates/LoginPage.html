@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id='heading'>
+      <h1>BackTrack</h1>
+    </div>
+    <div id='login'>
+      {% if messages %}
+        {% for message in messages%}
+          {{message}}<br>
+        {% endfor %}
+      {% endif %}
+      <form action="signin" method="post">
+        {% csrf_token %}
+        <label>Username:</label>
+        <input type="text" name="username"><br>
+        <label>Password:</label>
+        <input type="password" name="password"><br>
+        <label>Position:</label>
+        <select name="position">
+          <option value="Developer">Developer</option>
+          <option value="Manager">Manager</option>
+        </select><br>
+        <input type="submit">
+      </form>
+    </div>
+  </body>
+</html>

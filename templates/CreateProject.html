@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id='heading' class="col-12">
+      <h1>BackTrack</h1>
+      <span>{{user.name}}{{context}}</span>
+      <img src="{{user.icon}}">
+      <form action="logout" method="GET">
+        <input type='submit' value='logout'>
+      </form>
+    </div>
+    <div id='manager' class="col-6">
+      <table>
+        <tr>
+          <th>Manager ID</th>
+          <th>Manager Name</th>
+        </tr>
+        {% for manager in Manager %}
+          <tr>
+            <td>{{manager.pk}}</td>
+            <td>{{manager.name}}</td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+    <div id='developer' class="col-6">
+      <table>
+        <tr>
+          <th>Developer ID</th>
+          <th>Developer Name</th>
+        </tr>
+        {% for developer in Developer %}
+          <tr>
+            <td>{{developer.pk}}</td>
+            <td>{{developer.name}}</td>
+          </tr>
+        {% empty %}
+          <tr>No developers are available</tr>
+        {% endfor %}
+      </table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id='heading' class="col-12">
+      <h1>BackTrack</h1>
+      <span>{{user.name}}{{context}}</span>
+      <img src="{{user.icon}}">
+      <form action="logout" method="GET">
+        <input type='submit' value='logout'>
+      </form>
+    </div>
+    <div id='info' class="col-12">
+      <span>ProjectID:{{Project.pk}} Project name:{{Project.name}} Product owner:{{Project.product_owner.pk}}</span>
+    <div id='page' class="col-3">
+      <input type="radio" name="page" value="ProductBacklog">Product Backlog<br>
+      <input type="radio" name="page" value="SprintBacklog">Sprint Backlog<br>
+    </div>
+    <div id='list' class="col-9">
+      <span>{% if Position == 'Developer' and user.pk == Project.product_owner.pk %}<button>Edit</button> {% endif %}Number of PBIs:{{NumberOfPBIs}} Story points:{{Storypoints.total}}</span>
+      <table>
+        <tr>
+        {% for item in ProductBacklog %}
+          <td id ="{{item.pk}}" index="{{item.order}}">{{item.name}}<br>{{item.description}}<br>{{item.size}}<br>{{item.sprint}}<br><button>Add to Sprint</button></td>
+        {% endfor %}
+        </tr>
+    </div>
+  </body>
+</html>
