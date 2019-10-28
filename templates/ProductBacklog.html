@@ -27,10 +27,10 @@
       </span>
       <table>
         <tr>
-          <td>Name<br>Description<br>Size<br>Sprint</td>
+          <td>Name<br>Description<br>Size<br>Cumulative size<br>Sprint</td>
           {% for item in ProductBacklog %}
 
-              <td id ="{{item.pk}}" index="{{item.order}}" {% if item.status == '1' %}bgcolor="red" {% elif item.status == '2' %}bgcolor="yellow" {% else %} bgcolor="green"{% endif %}>{% if Position == 'Developer' and user.pk == Project.product_owner.pk %}<a href="DeletePBI/?id={{item.pk}}">Delete</a><br>{% endif %}{{item.name}}<br>{{item.description}}<br>{{item.size}}<br>{% if item.sprintbacklog is None %}<span>Not in sprint</span>{% else %}{{item.sprintbacklog.sprint.sprint_number}}{% endif %}<br>{% if Position == 'Developer' and user.pk == Project.product_owner.pk %}<button>Add to Sprint</button>{% endif %}</td>
+              <td id ="{{item.pk}}" index="{{item.order}}" {% if item.status == '1' %}bgcolor="red" {% elif item.status == '2' %}bgcolor="yellow" {% else %} bgcolor="green"{% endif %}>{% if Position == 'Developer' and user.pk == Project.product_owner.pk %}<a href="DeletePBI/?id={{item.pk}}">Delete</a><br>{% endif %}{{item.name}}<br>{{item.description}}<br>{{item.size}}<br>{{item.cumulative}}<br>{% if item.sprintbacklog is None %}<span>Not in sprint</span>{% else %}{{item.sprintbacklog.sprint.sprint_number}}{% endif %}<br>{% if Position == 'Developer' and user.pk == Project.product_owner.pk %}<button>Add to Sprint</button>{% endif %}</td>
 
           {% endfor %}
         </tr>

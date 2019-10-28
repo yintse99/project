@@ -63,6 +63,10 @@ class Productbacklog(TemplateView):
             context['user'] = Manager.objects.filter(pk=self.request.session['id'])[0]
         context['Project'] = Project.objects.filter(pk=projectID)[0]
         context['ProductBacklog'] = context['Project'].productbacklog_set.all().order_by('order')
+        cumulative =0
+        for item in context['ProductBacklog']:
+            cumulative +=item.size
+            item.cumulative = cumulative
         context['NumberOfPBIs'] = context['ProductBacklog'].count()
         context['Storypoints'] = context['ProductBacklog'].aggregate(total=Sum("size"))
         context['Position'] = self.request.session['position']
