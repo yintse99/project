@@ -12,16 +12,16 @@
       {% endif %}
       <form action="signin" method="post">
         {% csrf_token %}
-        <label>Username:</label>
+        <label>Username:</label><br>
         <input type="text" name="username"><br>
-        <label>Password:</label>
+        <label>Password:</label><br>
         <input type="password" name="password"><br>
-        <label>Position:</label>
+        <label>Position:</label><br>
         <select name="position">
           <option value="Developer">Developer</option>
           <option value="Manager">Manager</option>
         </select><br>
-        <input type="submit">
+        <input type="submit" value="Login">
       </form>
     </div>
   </body>

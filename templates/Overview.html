@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id='heading' class="col-12">
+      <h1>BackTrack</h1>
+      <span>{{user.name}}{{context}}</span>
+      <img src="{{user.icon}}">
+      <form action="/BackTrack/logout" method="GET">
+        <input type='submit' value='logout'>
+      </form>
+    </div>
+    <div id='page' class="col-3">
+      <input type="radio" name="page" value="Overview" checked>Overview<br>
+      <input type="radio" name="page" value="ProductBacklog">Product Backlog<br>
+      <input type="radio" name="page" value="SprintBacklog">Sprint Backlog<br>
+    </div>
+    <div id='list' class="col-9">
+      <span>
+        Number of projects:{{NumberOfProjects}}
+      </span>
+      <table>
+        <tr>
+          <td>Project name<br>Product Owner name<br>Product Backlog<br>Sprint Backlog</td>
+          {% for project in Project %}
+          <td id ="{{project.pk}}">{{project.name}}<br>{{project.product_owner.name}}<br><a href="Productbacklog/?id={{project.pk}}">Product Backlog</a><br><a href="SprintBacklog/?id={{project.pk}}">Sprint Backlog</a></td>
+          {% endfor %}
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

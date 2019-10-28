@@ -5,20 +5,23 @@
       <h1>BackTrack</h1>
       <span>{{user.name}}{{context}}</span>
       <img src="{{user.icon}}">
-      <form action="logout" method="GET">
+      <form action="/BackTrack/logout" method="GET">
         <input type='submit' value='logout'>
       </form>
     </div>
+    <form action='AddProject' method='POST'>
     <div id='manager' class="col-6">
       <table>
         <tr>
           <th>Manager ID</th>
           <th>Manager Name</th>
+          <th>Selected</th>
         </tr>
         {% for manager in Manager %}
           <tr>
             <td>{{manager.pk}}</td>
             <td>{{manager.name}}</td>
+            <td><input type="radio" name="manager">
           </tr>
         {% endfor %}
       </table>
@@ -28,16 +31,27 @@
         <tr>
           <th>Developer ID</th>
           <th>Developer Name</th>
+          <th>Seleted</th>
         </tr>
-        {% for developer in Developer %}
+          {% for developer in Developer %}
           <tr>
             <td>{{developer.pk}}</td>
             <td>{{developer.name}}</td>
+            <td><input type="checkbox" name="developer{{developer.pk}}"></td>
           </tr>
-        {% empty %}
-          <tr>No developers are available</tr>
-        {% endfor %}
-      </table>
+          {% if forloop.last %}
+          </table>
+          {% endif %}
+          {% empty %}
+          </table>
+          <span>No developers are available</span>
+          {% endfor %}
     </div>
+    <div id='submit'>
+      <label>Project name:</label>
+      <input type="text"><br>
+      <input type="submit" value="Send email and create project">
+    </div>
+  </form>
   </body>
 </html>

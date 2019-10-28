@@ -5,24 +5,65 @@
       <h1>BackTrack</h1>
       <span>{{user.name}}{{context}}</span>
       <img src="{{user.icon}}">
-      <form action="logout" method="GET">
+      <form action="/BackTrack/logout" method="GET">
         <input type='submit' value='logout'>
       </form>
     </div>
     <div id='info' class="col-12">
       <span>ProjectID:{{Project.pk}} Project name:{{Project.name}} Product owner:{{Project.product_owner.pk}}</span>
+    </div>
     <div id='page' class="col-3">
-      <input type="radio" name="page" value="ProductBacklog">Product Backlog<br>
+      {% if Position == 'Manager' %}
+      <input type="radio" name="page" value="Overview">Overview<br>
+      {% endif %}
+      <input type="radio" name="page" value="ProductBacklog" checked>Product Backlog<br>
       <input type="radio" name="page" value="SprintBacklog">Sprint Backlog<br>
     </div>
     <div id='list' class="col-9">
-      <span>{% if Position == 'Developer' and user.pk == Project.product_owner.pk %}<button>Edit</button> {% endif %}Number of PBIs:{{NumberOfPBIs}} Story points:{{Storypoints.total}}</span>
+      <span>{% if Position == 'Developer' and user.pk == Project.product_owner.pk %}
+        <button>Change Order</button>
+        {% endif %}
+        Number of PBIs:{{NumberOfPBIs}} Story points:{{Storypoints.total}}
+      </span>
       <table>
         <tr>
-        {% for item in ProductBacklog %}
-          <td id ="{{item.pk}}" index="{{item.order}}">{{item.name}}<br>{{item.description}}<br>{{item.size}}<br>{{item.sprint}}<br><button>Add to Sprint</button></td>
-        {% endfor %}
+          <td>Name<br>Description<br>Size<br>Sprint</td>
+          {% for item in ProductBacklog %}
+
+              <td id ="{{item.pk}}" index="{{item.order}}" {% if item.status == '1' %}bgcolor="red" {% elif item.status == '2' %}bgcolor="yellow" {% else %} bgcolor="green"{% endif %}>{% if Position == 'Developer' and user.pk == Project.product_owner.pk %}<a href="DeletePBI/?id={{item.pk}}">Delete</a><br>{% endif %}{{item.name}}<br>{{item.description}}<br>{{item.size}}<br>{% if item.sprintbacklog is None %}<span>Not in sprint</span>{% else %}{{item.sprintbacklog.sprint.sprint_number}}{% endif %}<br>{% if Position == 'Developer' and user.pk == Project.product_owner.pk %}<button>Add to Sprint</button>{% endif %}</td>
+
+          {% endfor %}
         </tr>
+      </table>
     </div>
+    <div id='filter' class="col-9">
+      <h3>Filter</h3>
+      <form action='filter' method="POST">
+        {% csrf_token %}
+        <label>Show:</label><br>
+        <label>Size>=</label><input type="number" name="larger" ><br>
+        <label>Size<=</label><input type="number" name="smaller"><br>
+        <label>Filter out:</label><br>
+        <input type="checkbox" name="notinsprint" value="1">Not in sprint<br>
+        <input type="checkbox" name="insprint" value="2">In sprint<br>
+        <input type="checkbox" name="finished" value="3">Finished<br>
+        <input type="submit" value="Filter">
+      </form>
+    </div>
+    {% if Position == 'Developer' and user.pk == Project.product_owner.pk %}
+    <div id='add' class="col-9">
+      <h3>Add PBIs</h3>
+      <form action="AddPBI" method="POST">
+        {% csrf_token %}
+        <label>name:</label><br>
+        <input type="text" name="name"><br>
+        <label>description:</label><br>
+        <input type="text" name="description"><br>
+        <label>size:</label><br>
+        <input type="text" name="size"><br>
+        <input type="submit" value="Add">
+      </form>
+    </div>
+    {% endif %}
   </body>
 </html>
